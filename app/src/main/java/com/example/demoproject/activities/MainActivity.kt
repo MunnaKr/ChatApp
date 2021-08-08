@@ -6,17 +6,21 @@ import android.text.Html
 import android.text.TextWatcher
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.example.demoproject.Validation
 import com.example.demoproject.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding:ActivityMainBinding
+    private lateinit var validation:Validation
    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view: View = binding.getRoot()
         setContentView(view)
         supportActionBar?.hide()
+
+       validation = Validation()
 
 //       binding.title.text = Html.fromHtml(getColoredSpanned("H", "#FFFFFF") +
 //                getColoredSpanned("I", "#00E557"))
@@ -53,11 +57,11 @@ class MainActivity : AppCompatActivity() {
         binding.loginBtn.setOnClickListener{
             binding.userName.clearFocus()
             binding.password.clearFocus()
-            if (binding.userName.text.isEmpty())
+            if (!validation.isUserName(binding.userName.text.toString()))
             {
                 binding.userNameError.visibility = View.VISIBLE
             }
-            if (binding.password.text.isEmpty())
+            if (!validation.isPassword(binding.password.text.toString()))
             {
                 binding.passwordError.visibility = View.VISIBLE
             }
